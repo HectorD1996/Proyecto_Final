@@ -434,6 +434,8 @@
 	    }
             
       </style>
+
+
    </head>
    <body>
     <div class="chat-sidebar">
@@ -454,6 +456,7 @@
          </div>
          <div class="clear">
          </div>
+         <!--se recibe el usuaro --> >
          <div id="nickWrap">
             <p>Ingrese un Usuario:</p>
             <p id="nickError"></p>
@@ -529,7 +532,7 @@
 					}
 				});
 			}
-         	
+         	/*Se rebiza si el nombre de ususario es correcto y cierra el popup*/
          	$nickform.submit(function(e){
          	e.preventDefault();
 			$currentUserId = $nickBox.val();

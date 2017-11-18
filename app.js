@@ -9,6 +9,7 @@ server.listen(3000, function(){
   console.log('listening on *:3000');
 });
 
+/* Se ingresa la dirrecion de la base de datos */
 var mongoURI = "mongodb://12345:123456@ds113046.mlab.com:13046/pruebas";
 var MongoDB = mongoose.connect(mongoURI).connection;
 MongoDB.on('error', function(err) { console.log(err.message); });
@@ -16,6 +17,7 @@ MongoDB.once('open', function() {
     console.log("mongodb connection open");
 });
 
+/*Randomizador para crear un Guid artificial */
 function guid() {
     function s4() {
       return Math.floor((1 + Math.random()) * 0x10000)
@@ -26,6 +28,7 @@ function guid() {
       s4() + '-' + s4() + s4() + s4();
   }
 
+  /*Crea la forma en la que la informacion se almacenara en la base de datos*/
 var chatSchema = mongoose.Schema({
     Guid:  String,
     sender: String,
@@ -35,6 +38,7 @@ var chatSchema = mongoose.Schema({
     created: {type: Date, default: Date.now}
 });
 
+/* modelo de forma para la base datos  */
 var ChatModel = mongoose.model('Message', chatSchema);
 
 
@@ -56,6 +60,7 @@ io.on('connection',function(socket){
     socket.on('send message',function(data){
         var ram = guid();
         console.log(ram);
+        /* se crea el la informacion de  */
         var newMsg = new ChatModel({Guid: ram, msg:data.msg,sender: data.sender, reciever: data.reciever,nickname:socket.nickname});
         newMsg.save(function(err){
         if(err){
@@ -65,7 +70,7 @@ io.on('connection',function(socket){
         }
         });			
     });
-
+/*se agregau el nuevo suario ingresato */
     socket.on('new user',function(data, callback){
         console.log('new user added: '+data);
         if(data in users){
@@ -81,7 +86,7 @@ io.on('connection',function(socket){
     socket.on('picked color',function(data){
         io.emit('new color',{color:data,nickname: socket.nickname});
     });
-    
+    /*Se disconecta el servidor socket.io */
     socket.on('disconnect', function(data){
         if(!socket.nickname) return;
         delete users[socket.nickname];
