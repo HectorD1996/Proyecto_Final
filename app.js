@@ -6,7 +6,10 @@ server = require('http').createServer(app),
 io=require('socket.io').listen(server),
 mongoose = require('mongoose'),
 users={};
-
+usuario={
+    nombre='admin';
+    clave='admin';
+}
 app.use(bodyParser.urlencoded({ extended:false}));
  
 
