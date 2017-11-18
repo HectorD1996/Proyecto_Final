@@ -1,5 +1,5 @@
-var express= require('express'),
-var bodyParser=require('body-parser');
+var express= require('express');
+ bodyParser=require('body-parser'),
 
 app=express(),
 server = require('http').createServer(app),
