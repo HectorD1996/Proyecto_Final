@@ -1,9 +1,28 @@
 var express= require('express'),
+var bodyParser=require('body-parser');
+
 app=express(),
 server = require('http').createServer(app),
 io=require('socket.io').listen(server),
 mongoose = require('mongoose'),
 users={};
+
+app.use(bodyParser.urlencoded({ extended:false}));
+ 
+
+app.get('/',function(req,res){
+    res.status(200).sendfile('login.html');
+});
+
+app.post("/login",function(request,response) {  
+    nombre =''+request.body.nombre;
+    clave=''+request.body.clave;
+    if (nombre==usuario.nombre || clave==usuario.clave) {
+        response.status(200).send('index.html');
+    }else {
+        response.status(401).end(nombre + " usuario incorrecto " + clave);
+    }
+});
 
 server.listen(3000, function(){
   console.log('listening on *:3000');
